@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^5.3.1",
+    "nuxt": "3.0.0-rc.6"
+  },
+  "dependencies": {
+    "clsx": "^1.2.1",
+    "prismjs": "^1.28.0",
+    "uuid": "^8.3.2"
+  }
+}

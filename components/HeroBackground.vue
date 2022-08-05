@@ -5,6 +5,7 @@
     width="668"
     height="1069"
     fill="none"
+    v-bind="$attrs"
   >
     <defs>
       <clipPath :id="idClipPath">
@@ -182,12 +183,12 @@
 
 <script>
 import { v4 as uuidv4 } from 'uuid'
-
+let id = uuidv4()
 export default {
   name: 'HeroBackground',
   data () {
     return {
-      id: uuidv4()
+      id
     }
   },
   computed: {

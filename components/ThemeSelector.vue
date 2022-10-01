@@ -1,5 +1,5 @@
 <template>
-      <Listbox
+    <Listbox
       as="div"
       v-model="selectedTheme"
     >
@@ -14,19 +14,20 @@
         <DarkIcon class="hidden h-4 w-4 fill-slate-400 [.dark[data-theme=system]_&]:block" />
       </ListboxButton>
       <ListboxOptions class="absolute top-full left-1/2 mt-3 w-36 -translate-x-1/2 space-y-1 rounded-xl bg-white p-3 text-sm font-medium shadow-md shadow-black/5 ring-1 ring-black/5 dark:bg-slate-800 dark:ring-white/5">
-        <ListboxOption v-for="theme in themes" :key="theme.name" :value="theme" :class="listboxOptionClass" v-show="selected" v-slot="{ selected }">
-              <div class="rounded-md bg-white p-1 shadow ring-1 ring-slate-900/5 dark:bg-slate-700 dark:ring-inset dark:ring-white/5">
-                <component :is="theme.icon" class="h-6 w-6 fill-current"
-                  :class="themeIconClass(selected)"
-                />
-              </div>
-              <div class="ml-3">{{theme.name}}</div>
+        <ListboxOption v-for="theme in themes" :key="theme.name" :value="theme" :class="listboxOptionClass(theme)" v-slot="{ selected }">
+          <div class="rounded-md bg-white p-1 shadow ring-1 ring-slate-900/5 dark:bg-slate-700 dark:ring-inset dark:ring-white/5">
+            <component 
+              :is="theme.icon"
+              :class="themeIconClass(selected)"
+            />
+          </div>
+          <div class="ml-3">{{theme.name}}</div>
         </ListboxOption>
       </ListboxOptions>
     </Listbox>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Listbox,
@@ -47,42 +48,17 @@ const themes = [
 ]
 
 let selectedTheme = ref(themes[0])
+function listboxOptionClass(theme) {
+  return ['flex cursor-pointer select-none items-center rounded-[0.625rem] p-1',
+              {
+                'text-sky-500': theme.selected,
+                'text-slate-900 dark:text-white': theme.active && !theme.selected,
+                'text-slate-700 dark:text-slate-400': !theme.active && !theme.selected,
+                'bg-slate-100 dark:bg-slate-900/40': theme.active,
+              }]
+}
 
-export default {
-  data () {
-    return {
-      selectedTheme,
-      themes,
-    }
-  },
-  components: {
-    Listbox,
-    ListboxButton,
-    ListboxOptions,
-    ListboxLabel,
-    ListboxOption,
-    LightIcon,
-    DarkIcon,
-    SystemIcon,
-  },
-  computed: {
-    listboxOptionClass(theme) {
-      return ['flex cursor-pointer select-none items-center rounded-[0.625rem] p-1',
-                  {
-                    'text-sky-500': theme.selected,
-                    'text-slate-900 dark:text-white': theme.active && !theme.selected,
-                    'text-slate-700 dark:text-slate-400': !theme.active && !theme.selected,
-                    'bg-slate-100 dark:bg-slate-900/40': theme.active,
-                  }]
-    },
-    themeIconClass(selected) {
-      return [(
-                    'h-4 w-4',
-                    selected
-                      ? 'fill-sky-400 dark:fill-sky-400'
-                      : 'fill-slate-400'
-                  )]
-    },
-  }
+function themeIconClass(selected) {
+  return `h-4 w-4' ${selected ? 'fill-sky-400 dark:fill-sky-400' : 'fill-slate-400'}`
 }
 </script>

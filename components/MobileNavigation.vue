@@ -25,7 +25,7 @@
           <Logomark class="h-9 w-9" />
         </NuxtLink>
       </div>
-      <!-- <Navigation navigation={navigation} class="mt-5 px-1" /> -->
+      <!-- <Navigation :navigation='navigation' class="mt-5 px-1" /> -->
     </DialogPanel>
   </Dialog>
 </template>

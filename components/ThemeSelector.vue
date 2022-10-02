@@ -47,7 +47,14 @@ const themes = [
   { name: 'System', value: 'system', icon: SystemIcon },
 ]
 
-let selectedTheme = ref(themes[0])
+const selectedTheme = ref(themes[0])
+
+watch(selectedTheme, () => {
+  document.documentElement.setAttribute('theme', selectedTheme.value.value)
+  document.documentElement.setAttribute('data-theme', selectedTheme.value.value)
+  localStorage.setItem('theme', selectedTheme.value.value)
+})
+
 function listboxOptionClass(theme) {
   return ['flex cursor-pointer select-none items-center rounded-[0.625rem] p-1',
               {

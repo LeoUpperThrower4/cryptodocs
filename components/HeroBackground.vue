@@ -1,3 +1,13 @@
+<script setup lang="ts">
+  import { v4 as uuidv4 } from 'uuid'
+  let id = uuidv4()
+  function idClipPath() {
+    return `url(#${id})`
+  }
+  function urlClipPath () {
+    return `url(#${this.idClipPath})`
+  }
+</script>
 <template>
   <svg
     aria-hidden="true"
@@ -180,25 +190,3 @@
     </g>
   </svg>
 </template>
-
-<script>
-import { v4 as uuidv4 } from 'uuid'
-let id = uuidv4()
-export default {
-  name: 'HeroBackground',
-  data () {
-    return {
-      id
-    }
-  },
-  computed: {
-    idClipPath () {
-      return `${this.id}-clip-path`
-    },
-    urlClipPath () {
-      return `url(#${this.idClipPath})`
-    }
-  },
-
-}
-</script>

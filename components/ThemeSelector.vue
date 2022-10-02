@@ -1,3 +1,46 @@
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import {
+    Listbox,
+    ListboxButton,
+    ListboxOptions,
+    ListboxLabel,
+    ListboxOption,
+  } from '@headlessui/vue'
+  
+  import LightIcon from './LightIcon.vue'
+  import DarkIcon from './DarkIcon.vue'
+  import SystemIcon from './SystemIcon.vue'
+  
+  const themes = [
+    { name: 'Light', value: 'light', icon: LightIcon },
+    { name: 'Dark', value: 'dark', icon: DarkIcon },
+    { name: 'System', value: 'system', icon: SystemIcon },
+  ]
+  
+  const selectedTheme = ref(themes[0])
+  
+  watch(selectedTheme, () => {
+    document.documentElement.setAttribute('theme', selectedTheme.value.value)
+    document.documentElement.setAttribute('data-theme', selectedTheme.value.value)
+    localStorage.setItem('theme', selectedTheme.value.value)
+  })
+  
+  function listboxOptionClass(theme) {
+    return ['flex cursor-pointer select-none items-center rounded-[0.625rem] p-1',
+                {
+                  'text-sky-500': theme.selected,
+                  'text-slate-900 dark:text-white': theme.active && !theme.selected,
+                  'text-slate-700 dark:text-slate-400': !theme.active && !theme.selected,
+                  'bg-slate-100 dark:bg-slate-900/40': theme.active,
+                }]
+  }
+  
+  function themeIconClass(selected) {
+    return `h-4 w-4' ${selected ? 'fill-sky-400 dark:fill-sky-400' : 'fill-slate-400'}`
+  }
+</script>
+
 <template>
     <Listbox
       as="div"
@@ -26,46 +69,3 @@
       </ListboxOptions>
     </Listbox>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxLabel,
-  ListboxOption,
-} from '@headlessui/vue'
-
-import LightIcon from './LightIcon.vue'
-import DarkIcon from './DarkIcon.vue'
-import SystemIcon from './SystemIcon.vue'
-
-const themes = [
-  { name: 'Light', value: 'light', icon: LightIcon },
-  { name: 'Dark', value: 'dark', icon: DarkIcon },
-  { name: 'System', value: 'system', icon: SystemIcon },
-]
-
-const selectedTheme = ref(themes[0])
-
-watch(selectedTheme, () => {
-  document.documentElement.setAttribute('theme', selectedTheme.value.value)
-  document.documentElement.setAttribute('data-theme', selectedTheme.value.value)
-  localStorage.setItem('theme', selectedTheme.value.value)
-})
-
-function listboxOptionClass(theme) {
-  return ['flex cursor-pointer select-none items-center rounded-[0.625rem] p-1',
-              {
-                'text-sky-500': theme.selected,
-                'text-slate-900 dark:text-white': theme.active && !theme.selected,
-                'text-slate-700 dark:text-slate-400': !theme.active && !theme.selected,
-                'bg-slate-100 dark:bg-slate-900/40': theme.active,
-              }]
-}
-
-function themeIconClass(selected) {
-  return `h-4 w-4' ${selected ? 'fill-sky-400 dark:fill-sky-400' : 'fill-slate-400'}`
-}
-</script>

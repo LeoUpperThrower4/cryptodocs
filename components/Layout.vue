@@ -5,6 +5,7 @@
   const router = useRouter();
   const { navigation, prev, next, page, toc } = useContent()
   useContentHead(page)
+  
   const navigationLinks = [
   {
     title: 'Introduction',
@@ -89,10 +90,10 @@
       <div class="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto py-16 pl-0.5">
         <div class="absolute top-16 bottom-0 right-0 hidden h-12 w-px bg-gradient-to-t from-slate-800 dark:block" />
         <div class="absolute top-28 bottom-0 right-0 hidden w-px bg-slate-800 dark:block" />
-        <!-- <Navigation
-          navigation="navigation.value"
+        <Navigation
+          :navigation="navigationLinks"
           class="w-64 pr-8 xl:w-72 xl:pr-16"
-        /> -->
+        />
       </div>
     </div>
     <div class="min-w-0 max-w-2xl flex-auto px-4 py-16 lg:max-w-none lg:pr-0 lg:pl-8 xl:px-16">
@@ -138,83 +139,46 @@
     </div>
     <div class="hidden xl:sticky xl:top-[4.5rem] xl:-mr-6 xl:block xl:h-[calc(100vh-4.5rem)] xl:flex-none xl:overflow-y-auto xl:py-16 xl:pr-6">
       <nav class="w-56" aria-labelledby="on-this-page-title">
-            <div v-if="toc.links.length > 0">
-            <h2
-              id="on-this-page-title"
-              class="font-display text-sm font-medium text-slate-900 dark:text-white"
-            >
-              On this page
-            </h2>
-            <ol role="list" class="mt-4 space-y-3 text-sm">
-              <li v-for="section in toc.links" :key="section.id">
-                <h3>
-                  <NuxtLink 
-                    :to="`#${section.id}`"
-                    :class="[
-                        isActive(section)
-                          ? 'text-sky-500'
-                          : 'font-normal text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300']"                  >
-                    {{section.text}}
+        <div v-if="toc.links.length > 0">
+          <h2
+            id="on-this-page-title"
+            class="font-display text-sm font-medium text-slate-900 dark:text-white"
+          >
+            On this page
+          </h2>
+          <ol role="list" class="mt-4 space-y-3 text-sm">
+            <li v-for="section in toc.links" :key="section.id">
+              <h3>
+                <NuxtLink 
+                  :to="`#${section.id}`"
+                  :class="[
+                      isActive(section)
+                        ? 'text-sky-500'
+                        : 'font-normal text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300']"                  >
+                  {{section.text}}
+                </NuxtLink>
+              </h3>
+              <ol
+                v-if="section.children.length > 0"
+                role="list"
+                class="mt-2 space-y-3 pl-5 text-slate-500 dark:text-slate-400"
+              >
+                <li
+                  v-for="subSection in section.children"
+                  :key="subSection.id">
+                  <NuxtLink
+                    :to="`#${subSection.id}`"
+                    :class="
+                      isActive(subSection)
+                        ? 'text-sky-500'
+                        : 'hover:text-slate-600 dark:hover:text-slate-300'">
+                    {{subSection.text}}
                   </NuxtLink>
-                </h3>
-                <ol
-                  v-if="section.children.length > 0"
-                  role="list"
-                  class="mt-2 space-y-3 pl-5 text-slate-500 dark:text-slate-400"
-                >
-                  <li
-                    v-for="subSection in section.children"
-                    :key="subSection.id">
-                    <NuxtLink
-                      :to="`#${subSection.id}`"
-                      :class="
-                        isActive(subSection)
-                          ? 'text-sky-500'
-                          : 'hover:text-slate-600 dark:hover:text-slate-300'">
-                      {{subSection.text}}
-                    </NuxtLink>
-                  </li>
-                </ol>
-              </li>
-              <!-- {tableOfContents.map((section) => (
-                <li key={section.id}>
-                  <h3>
-                    <Link
-                      href={`#${section.id}`}
-                      class={[
-                        isActive(section)
-                          ? 'text-sky-500'
-                          : 'font-normal text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300'
-                      )]
-                    >
-                      {section.title}
-                    </Link>
-                  </h3>
-                  {section.children.length > 0 && (
-                    <ol
-                      role="list"
-                      class="mt-2 space-y-3 pl-5 text-slate-500 dark:text-slate-400"
-                    >
-                      {section.children.map((subSection) => (
-                        <li key={subSection.id}>
-                          <Link
-                            href={`#${subSection.id}`}
-                            class={
-                              isActive(subSection)
-                                ? 'text-sky-500'
-                                : 'hover:text-slate-600 dark:hover:text-slate-300'
-                            }
-                          >
-                            {subSection.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ol>
-                  )}
                 </li>
-              ))} -->
-            </ol>
-          </div>
+              </ol>
+            </li>
+          </ol>
+        </div>
       </nav>
     </div>
   </div>

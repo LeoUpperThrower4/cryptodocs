@@ -1,3 +1,28 @@
+<script setup lang="ts">
+  import MenuIcon from './MenuIcon.vue'
+  import CloseIcon from './CloseIcon.vue'
+  import { ref } from 'vue'
+  import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    DialogDescription,
+  } from '@headlessui/vue'
+
+  defineProps({
+    navigation: {
+      type: Array,
+      default: () => []
+    }
+  })
+  const isOpen = ref(true)
+
+  function setIsOpen(value) {
+    isOpen.value = value
+  }
+  
+</script>
+
 <template>
   <button
     type="button"
@@ -25,49 +50,7 @@
           <Logomark class="h-9 w-9" />
         </NuxtLink>
       </div>
-      <!-- <Navigation :navigation='navigation' class="mt-5 px-1" /> -->
+      <Navigation :navigation='navigation' class="mt-5 px-1" />
     </DialogPanel>
   </Dialog>
 </template>
-
-<script>
-import MenuIcon from './MenuIcon.vue'
-import CloseIcon from './CloseIcon.vue'
-import { ref } from 'vue'
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  DialogDescription,
-} from '@headlessui/vue'
-
-  const isOpen = ref(true)
-
-  function setIsOpen(value) {
-    isOpen.value = value
-  }
-export default {
-  data () {
-    return {
-      isOpen: false
-    }
-  },
-  props: {
-    navigation: {
-      type: Array,
-      default: () => []
-    }
-  },
-  methods: {
-    setIsOpen
-  },
-  components: {
-    MenuIcon,
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    DialogDescription,
-    CloseIcon
-  }
-}
-</script>

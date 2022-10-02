@@ -1,3 +1,25 @@
+<script setup lang="ts">
+  import 'prismjs'
+  import 'prismjs/themes/prism.css'
+  
+  defineProps({
+    code: {
+      type: String,
+      default: `export default {
+        strategy: 'predictive', 
+        engine: {
+          cpus: 12,
+          backups: ['./storage/cache.wtf'],
+      },
+    }`
+    },
+    codeLanguage: {
+      type: String,
+      default: 'javascript'
+    }
+  })
+</script>
+  
 <template>
   <pre>
     <code :class="'language-' + codeLanguage">
@@ -5,24 +27,3 @@
     </code>
   </pre>
 </template>
-
-<script>
-import 'prismjs'
-import 'prismjs/themes/prism.css'
-
-const defaultCodeLanguage = 'javascript'
-const defaultCode = `export default {
-      strategy: 'predictive', 
-      engine: {
-        cpus: 12,
-        backups: ['./storage/cache.wtf'],
-    },
-  }`
-
-export default {
-  props: {
-    codeLanguage: { type: String, default: defaultCodeLanguage },
-    code: { type: String, default: defaultCode }
-  }
-}
-</script>

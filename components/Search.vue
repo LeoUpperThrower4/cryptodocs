@@ -1,3 +1,8 @@
+<script setup lang="ts">
+  import SearchIcon from './SearchIcon'
+  const modifierKey = undefined
+</script>
+
 <template>
   <button
   type="button"
@@ -29,17 +34,3 @@
     document.body
   )} -->
 </template>
-
-<script>
-import SearchIcon from './SearchIcon'
-export default {
-  data () {
-    return {
-      modifierKey: '',
-    }
-  },
-  components: {
-    SearchIcon,
-  },
-}
-</script>
